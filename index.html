@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.js"></script>
+    <script src="i18next.js"></script>
+    <script src="jquery.i18next.js"></script>
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+    <ul>
+        <li>
+            <a href="i18n_xhr.html">xhr demo</a>
+
+        </li>
+        <li></li>
+    </ul>
+
+    <ul class="nav">
+        <li>
+            <a href="#" data-i18n="index.home"></a>
+        </li>
+        <li>
+            <a href="#" data-i18n="index.page1"></a>
+        </li>
+        <li>
+            <a href="#" data-i18n="index.page2"></a>
+        </li>
+    </ul>
+
+    <div class="content">
+        <input data-i18n="[placeholder]input.placeholder; [title]input.placeholder" />
+    </div>
+
+    <div class="test" data-i18n="test1.hello"></div>
+
+    <button class="change">change</button>
+    <button class="click">console.log</button>
+
+    <script>
+        
+        var en_translation = {
+            'index': {
+                home: 'Home',
+                page1: 'Page one',
+                page2: 'Page two',
+                text: 'some text'
+            }
+        }
+        var cn_translation = {
+            'index': {
+                home: '首页',
+                page1: '页面一',
+                page2: '页面二',
+                text: '一些文本'
+            }
+        }
+
+        function init() {
+            $('body').localize();
+        }
+
+        //ready
+        $(function(){
+            //
+            bindLanguage({
+                en:en_translation, 
+                cn:cn_translation,
+                init: init
+            });
+    
+            //example
+            var lang = getDefaultLanguage();
+            $('.change').on('click', function () {
+                if (lang == 'en') {
+                    lang = 'cn'
+                } else {
+                    lang = 'en'
+                }
+                i18next.changeLanguage(lang, (err, t) => {
+                    init();
+                });
+            })
+            $('.click').on('click', function(){
+                console.log(i18next.t('index.text'))
+            })
+        })
+    </script>
+
+</body>
+
+</html>
